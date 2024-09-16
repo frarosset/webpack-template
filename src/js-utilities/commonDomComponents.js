@@ -8,6 +8,42 @@ export function initDiv(className = null) {
   return element;
 }
 
+export function initH1(
+  className = null,
+  faIcon = null,
+  textPre = "",
+  textPost = ""
+) {
+  const element = document.createElement("h1");
+  applyClass(element, className);
+  setFaIconInBetweenText(element, faIcon, textPre, textPost);
+  return element;
+}
+
+export function initH2(
+  className = null,
+  faIcon = null,
+  textPre = "",
+  textPost = ""
+) {
+  const element = document.createElement("h2");
+  applyClass(element, className);
+  setFaIconInBetweenText(element, faIcon, textPre, textPost);
+  return element;
+}
+
+export function initH3(
+  className = null,
+  faIcon = null,
+  textPre = "",
+  textPost = ""
+) {
+  const element = document.createElement("h3");
+  applyClass(element, className);
+  setFaIconInBetweenText(element, faIcon, textPre, textPost);
+  return element;
+}
+
 export function initP(
   className = null,
   faIcon = null,
@@ -25,12 +61,14 @@ export function initButton(
   clickCallback = () => {},
   faIcon = null,
   textPre = "",
-  textPost = ""
+  textPost = "",
+  type = "button"
 ) {
   const element = document.createElement("button");
   applyClass(element, className);
   setFaIconInBetweenText(element, faIcon, textPre, textPost);
   element.addEventListener("click", clickCallback);
+  element.type = type;
   return element;
 }
 
@@ -55,6 +93,101 @@ export function initImg(className = null, src = "", alt = "") {
   applyClass(element, className);
   element.src = src;
   element.alt = alt;
+  return element;
+}
+
+export function initInput(
+  className = null,
+  id = "",
+  name = "",
+  placeholder = "",
+  required = false,
+  ariaLabel = ""
+) {
+  const element = document.createElement("input");
+  applyClass(element, className);
+
+  element.name = name;
+  element.id = id;
+  element.placeholder = placeholder;
+  element.required = required;
+  element.ariaLabel = ariaLabel;
+
+  return element;
+}
+
+export function initTextArea(
+  className = null,
+  id = "",
+  name = "",
+  placeholder = "",
+  required = false,
+  ariaLabel = ""
+) {
+  const element = document.createElement("textarea");
+  applyClass(element, className);
+
+  element.name = name;
+  element.id = id;
+  element.placeholder = placeholder;
+  element.required = required;
+  element.ariaLabel = ariaLabel;
+
+  return element;
+}
+
+export function initLabel(
+  className = null,
+  forAttribute = null,
+  faIcon = null,
+  textPre = "",
+  textPost = ""
+) {
+  const element = document.createElement("label");
+  applyClass(element, className);
+  setFaIconInBetweenText(element, faIcon, textPre, textPost);
+  element.setAttribute("for", forAttribute);
+  return element;
+}
+
+export function initSelect(className = null, id = "", name = "") {
+  const element = document.createElement("select");
+  applyClass(element, className);
+  element.id = id;
+  element.name = name;
+  return element;
+}
+
+export function initDatalist(className = null, id = "") {
+  const element = document.createElement("datalist");
+  applyClass(element, className);
+  element.id = id;
+  return element;
+}
+
+export function initOption(
+  className = null,
+  value = "",
+  label = "",
+  textContent = ""
+) {
+  const element = document.createElement("option");
+  applyClass(element, className);
+  element.value = value;
+  element.label = label;
+  element.textContent = textContent;
+  return element;
+}
+
+export function initOptionAsChildInList(
+  parentList,
+  className = null,
+  value = "",
+  label = "",
+  textContent = ""
+) {
+  const element = initOption(className, value, label, textContent);
+  parentList.appendChild(element);
   return element;
 }
 
