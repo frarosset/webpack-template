@@ -33,15 +33,11 @@ export function triggerReflow(element) {
 }
 
 export function deleteElement(childToDelete) {
-  removeDescendants(childToDelete);
   childToDelete.parentNode.removeChild(childToDelete);
 }
 
 export function removeDescendants(elem) {
-  while (elem.hasChildNodes()) {
-    removeDescendants(elem.lastChild);
-    elem.removeChild(elem.lastChild);
-  }
+  elem.replaceChildren();
 }
 
 export function resetContent(contentDiv) {
@@ -103,4 +99,47 @@ function fitFontSize(elem, defaultFontSize='',delta=0.9){
 
 function splitCSSUnits(CSSAttrVal){
     return [CSSAttrVal.match(/[\d.]+/)[0],CSSAttrVal.match(/[^\d.]+/)[0]];
+}
+
+export function getNestedElementOfClass(point, requiredClass) {
+  const nestedElements = document.elementsFromPoint(...point);
+
+  for (const element of nestedElements) {
+    const classList = element.classList;
+
+    if ([...classList].includes(requiredClass)) {
+      return element;
+    }
+  }
+
+  return null;
+}
+
+export function waitForAsync(waitInMs) {
+  return new Promise((resolve) => setTimeout(resolve, waitInMs));
+}
+
+export async function ensureCssClassForAnimationAsync() {
+  await new Promise((resolve) => requestAnimationFrame(resolve));
+  await waitForAsync(0);
+}
+
+export async function triggerAnimation(
+  div,
+  animationInitialStateClass,
+  animationDuration,
+  hide = false
+) {
+  // this uses a trick to trigger the animation on the element
+
+  hide
+    ? div.classList.remove(animationInitialStateClass)
+    : div.classList.add(animationInitialStateClass);
+
+  await ensureCssClassForAnimationAsync();
+
+  div.classList.toggle(animationInitialStateClass);
+
+  // wait for the animation to end before removing it
+  return waitForAsync(animationDuration);
 }
